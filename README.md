@@ -1,4 +1,4 @@
-# Valkyrie Rails
+# Building a Rails App with Valkyrie
 
 A giuded installation and build of a Rails application using the Valkyrie gem
 as its database persistence layer.
