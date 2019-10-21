@@ -90,7 +90,9 @@ Now, re-run your spec tests...
 
     bundle exec rspec
 
-That allow all our routing tests to pass and knock us down to 6 failures.
+That allows all our routing tests to pass and knocks us down to 6 failures. We can also ignore our view tests for now, so
+you may either simply move them out of the spec directory, or mark each one pending. After that, there will only be two
+failing controller tests.
 
 ## Step 4: Getting the Controller Working with Change Sets
 
@@ -326,7 +328,7 @@ to the next part.
 
 ### PUT #update
 
-Add some attributes to update the resource:
+Under `describe "PUT #update"`, add some attributes to update the resource:
 
 ``` ruby
 let(:new_attributes) {
@@ -334,12 +336,10 @@ let(:new_attributes) {
 }
 ```
 
-Because our `set_book` action returns a change set, we can simply validate the
-new params on our change set directly and then update the resource.
+And also remove the `skip` instruction after the first test.
 
-N.B. this may not be the best way to implement this because `@book` is getting
-reset. An alternative implementation might be to keep the book and its change set
-more separate.
+Now we can update the controller action to get the tests to pass.  Because our `set_book` action returns a change set,
+we can simply validate the new params on our change set directly and then update the resource.
 
 ``` ruby
 def update
@@ -357,8 +357,12 @@ def update
 end
 ```
 
-To fix the `undefined method 'reload'` error, replace the lines in the
-test with:
+N.B. this may not be the best way to implement this because `@book` is getting
+reset. An alternative implementation might be to keep the book and its change set
+more separate.
+
+Reruning the test suite fixes some of the update errors, but there should be one remaining failure with `undefined
+method 'reload'`. To fix this, replace the lines in the test with:
 
 ``` ruby
 updated_book = Valkyrie.config.metadata_adapter.query_service.find_by(id: book.id)

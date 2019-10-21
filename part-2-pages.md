@@ -107,6 +107,14 @@ private
 Note that `page_params` only accepts singular values. Our file parameter will be singular, but our title is not. This
 means that while the model is technically an array, the form will only accept a string. Fortunately, the change set is
 able to accept single values, but persist them as arrays.
+
+Lastly, update the `new` action on our controller to use a change set instead of a resource:
+
+``` ruby
+def new
+  @page = PageChangeSet.new(Page.new)
+end
+```
  
 Refreshing our web page, we'll see one more path error in `app/views/pages/new.html.erb` that can be corrected by
 directing the "Back" link to the book's show path.
